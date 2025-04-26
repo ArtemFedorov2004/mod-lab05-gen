@@ -202,7 +202,7 @@ namespace Generator
         }
     }
 
-    class Program
+    public class Program
     {
         private static string _projectDirectory;
 
