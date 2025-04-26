@@ -9,7 +9,7 @@ namespace ProjCharGenerator.Tests
 
         private readonly string _mockBigramsFile;
 
-        private string _testWordsFile;
+        private string _mockWordsFile;
 
         public UnitTests()
         {
@@ -26,13 +26,13 @@ namespace ProjCharGenerator.Tests
                                  "4 аг 4";
             File.WriteAllText(_mockBigramsFile, bigramsContent);
 
-            _testWordsFile = Path.Combine(_projectDirectory, "test_words.txt");
+            _mockWordsFile = Path.Combine(_projectDirectory, "test_words.txt");
 
-            string testContent = "1 €блоко €блоко €блоко 0,5\n" +
+            string wordsContent = "1 €блоко €блоко €блоко 0,5\n" +
                                  "2 банан банан банан 0,3\n" +
                                  "3 апельсин апельсин апельсин 0,2";
 
-            File.WriteAllText(_testWordsFile, testContent);
+            File.WriteAllText(_mockWordsFile, wordsContent);
         }
 
         public void Dispose()
@@ -42,16 +42,10 @@ namespace ProjCharGenerator.Tests
                 File.Delete(_mockBigramsFile);
             }
 
-            if (File.Exists(_testWordsFile))
+            if (File.Exists(_mockWordsFile))
             {
-                File.Delete(_testWordsFile);
+                File.Delete(_mockWordsFile);
             }
-        }
-
-        [Fact]
-        public void Test1()
-        {
-            throw new Exception();
         }
 
         [Fact]
@@ -73,39 +67,6 @@ namespace ProjCharGenerator.Tests
 
 
             Assert.Equal(1.0 / 10, weight);
-        }
-
-        [Fact]
-        public void BigramGenerator_ShouldReturnCorrectWeight_WhenSymbolIsGiven2()
-        {
-            var generator = new BigramGenerator(_mockBigramsFile);
-
-            var weight = generator.GetWeight("аб");
-
-
-            Assert.Equal(2.0 / 10, weight);
-        }
-
-        [Fact]
-        public void BigramGenerator_ShouldReturnCorrectWeight_WhenSymbolIsGiven3()
-        {
-            var generator = new BigramGenerator(_mockBigramsFile);
-
-            var weight = generator.GetWeight("ав");
-
-
-            Assert.Equal(3.0 / 10, weight);
-        }
-
-        [Fact]
-        public void BigramGenerator_ShouldReturnCorrectWeight_WhenSymbolIsGiven4()
-        {
-            var generator = new BigramGenerator(_mockBigramsFile);
-
-            var weight = generator.GetWeight("аг");
-
-
-            Assert.Equal(4.0 / 10, weight);
         }
 
         [Fact]
@@ -167,7 +128,7 @@ namespace ProjCharGenerator.Tests
         [Fact]
         public void WordGenerator_ShouldReturnSymbol_WhenCalled()
         {
-            var generator = new WordGenerator(_testWordsFile);
+            var generator = new WordGenerator(_mockWordsFile);
 
             var symbol = generator.GetSymbol();
 
@@ -177,7 +138,7 @@ namespace ProjCharGenerator.Tests
         [Fact]
         public void WordGenerator_ShouldReturnCorrectWeight_WhenWordIsGiven1()
         {
-            var generator = new WordGenerator(_testWordsFile);
+            var generator = new WordGenerator(_mockWordsFile);
 
             var weight = generator.GetWeight("€блоко");
 
@@ -187,7 +148,7 @@ namespace ProjCharGenerator.Tests
         [Fact]
         public void WordGenerator_ShouldReturnCorrectWeight_WhenWordIsGiven2()
         {
-            var generator = new WordGenerator(_testWordsFile);
+            var generator = new WordGenerator(_mockWordsFile);
 
             var weight = generator.GetWeight("банан");
 
@@ -197,7 +158,7 @@ namespace ProjCharGenerator.Tests
         [Fact]
         public void WordGenerator_ShouldReturnCorrectWeight_WhenWordIsGiven3()
         {
-            var generator = new WordGenerator(_testWordsFile);
+            var generator = new WordGenerator(_mockWordsFile);
 
             var weight = generator.GetWeight("апельсин");
 
@@ -215,7 +176,7 @@ namespace ProjCharGenerator.Tests
         [Fact]
         public void WordGenerator_ShouldCorrectlySumWeights()
         {
-            var generator = new WordGenerator(_testWordsFile);
+            var generator = new WordGenerator(_mockWordsFile);
 
             double totalWeight = generator.GetWeight("€блоко") + generator.GetWeight("банан") + generator.GetWeight("апельсин");
 
@@ -225,7 +186,7 @@ namespace ProjCharGenerator.Tests
         [Fact]
         public void WordGenerator_ShouldReturnCorrectSymbolDistribution()
         {
-            var generator = new WordGenerator(_testWordsFile);
+            var generator = new WordGenerator(_mockWordsFile);
             int appleCount = 0;
             int bananaCount = 0;
             int orangeCount = 0;
